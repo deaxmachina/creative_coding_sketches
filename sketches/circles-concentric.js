@@ -9,7 +9,12 @@ import palettes from 'nice-color-palettes'
 // play with radius, noise type, opacity of cirlces, number of big cirlces
 
 const settings = {
-  dimensions: [ 2048, 2048 ]
+  suffix: Random.getSeed(),
+  dimensions: 'A4',
+  orientation: 'portrait',
+  pixelsPerInch: 300,
+  scaleToView: true,
+  units: 'cm'
 };
 
 // Create concentric circles 
