@@ -46,14 +46,16 @@ const sketch = () => {
 
   // Draw recursive pantagons with randomness
   const drawPentagramsRecursive = (rotation, x, y, width, height, radius, lineWidth, depth, context) => {
-    if (depth > 8) return 
+    if (depth > 9) return 
 
-    context.fillStyle = 'white'
-    context.strokeStyle = 'white'
+    //context.strokeStyle = `hsl(${240+depth*5}, 50%, 50%)` //'white'
+    context.strokeStyle = `hsl(${280+depth*5}, 50%, 50%)`
+    context.fillStyle = `hsl(${220+depth*5}, 50%, 50%)`
     context.lineWidth = lineWidth
 
-    x = x + Random.noise3D(x, y, depth, 0.75, 1)
-    y = y + Random.noise3D(x, y, depth, 0.5, 2)
+    x = x + Random.noise3D(x, y, depth, 0.5, 1)
+    y = y + Random.noise3D(x, y, depth, 0.5, 1)
+    rotation = rotation + Random.noise3D(x, y, depth, 0.75, 1)
 
     const drawPentagram = (x, y) => {
       for(var i = 0; i < 5; i ++){
@@ -68,34 +70,39 @@ const sketch = () => {
      context.beginPath()
      drawPentagram(x + width, y)
      context.closePath();
+     context.globalAlpha = 0.8
+     if (Math.random() > 0.9) context.fill()
      context.stroke();
 
      context.beginPath()
      drawPentagram(x + width, y + height)
      context.closePath();
+     if (Math.random() > 0.7) context.fill()
      context.stroke();
 
      context.beginPath()
      drawPentagram(x, y + height)
      context.closePath();
+     if (Math.random() > 0.9) context.fill()
      context.stroke();
 
      context.beginPath()
      drawPentagram(x, y)
      context.closePath();
+     if (Math.random() > 0.8) context.fill()
      context.stroke();
 
      if (Random.range(0, 1) < 0.95) {
-      drawPentagramsRecursive(rotation/depth, x, y, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
+      drawPentagramsRecursive(rotation, x, y, width/2, height/2, radius/1.5, lineWidth/2, depth+1, context)
     }
     if (Random.range(0, 1) < 0.8) {
-      drawPentagramsRecursive(rotation/depth, x+width/2, y, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
+      drawPentagramsRecursive(rotation, x+width/2, y, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
     }
     if (Random.range(0, 1) < 0.95) {
-      drawPentagramsRecursive(rotation/depth, x, y+height/2, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
+      drawPentagramsRecursive(rotation, x, y+height/2, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
     }
     if (Random.range(0, 1) < 0.7) {
-      drawPentagramsRecursive(rotation/depth, x+width/2, y+height/2, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
+      drawPentagramsRecursive(rotation, x+width/2, y+height/2, width/2, height/2, radius/2, lineWidth/2, depth+1, context)
     }
 
   }
@@ -143,7 +150,7 @@ const sketch = () => {
   }
 
   return ({ context, width, height }) => {
-    context.fillStyle = '#000';
+    context.fillStyle = '#8895b3' // '#8895b3' '#f0e6ef' '#1a1423' '#eca400' '#46414b' '#b388eb' '#8093f1';
     context.fillRect(0, 0, width, height);
 
     //drawCircles(width/2, height/2, 2, context)
@@ -151,7 +158,7 @@ const sketch = () => {
     //drawCirclesRecursive(0, 0, width, height, startRadius, 0.3, 1, context)
 
     const rotation = -Math.PI
-    drawPentagramsRecursive(rotation, 0, 0, width, height, startRadius, 0.1, 1, context)
+    drawPentagramsRecursive(rotation, 5, 5, width, height, startRadius, 0.2, 1, context)
 
   };
 };
